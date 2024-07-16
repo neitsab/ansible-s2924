@@ -9,3 +9,9 @@
         src: data.txt
         dest: /tmp
         mode: "0600"
+
+    - name: S'assurer de la présence de la ligne "Ouf, fini !"
+      ansible.builtin.lineinfile:
+        line: Ouf, c'est fini !
+        dest: /tmp/data.txt
+        backup: true
