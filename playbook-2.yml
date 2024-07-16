@@ -1,0 +1,11 @@
+---
+- name: Acte-I
+  hosts: linux
+  gather_facts: false
+
+  tasks:
+    - name: Copie du fichier data.txt
+      ansible.builtin.copy:
+        src: data.txt
+        dest: /tmp
+        mode: "0600"
