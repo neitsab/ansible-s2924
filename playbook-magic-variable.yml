@@ -1,0 +1,19 @@
+---
+- name: Variables magiques
+  hosts: linux
+  gather_facts: false
+
+  tasks:
+    - name: Tâche avec variable magique
+      ansible.builtin.debug:
+        msg: "Tâche I sur : {{ inventory_hostname }}"
+
+    - name: Debug optionnel 
+      ansible.builtin.debug:
+        msg: "Affichage selon verbosité"
+        verbosity: 2
+
+    - name: Tâche bidon
+      ansible.builtin.debug:
+        msg: "Tâche finale"
+
