@@ -1,0 +1,9 @@
+---
+- name: Acte-I
+  hosts: debiancli
+  gather_facts: false
+
+  tasks:
+    - name: Test d'accessibilité Ansible (module ping)
+      ping:
+        data: OK
