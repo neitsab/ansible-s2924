@@ -1,0 +1,9 @@
+---
+- name: Extra variables
+  hosts: debian
+  gather_facts: false
+
+  tasks:
+    - name: Module debug
+      ansible.builtin.debug:
+        msg: "Variable stage: {{ stage | default('Ansible') }}"
