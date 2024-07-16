@@ -7,3 +7,9 @@ fedoracli ansible_host=192.168.56.246
 [linux:children]
 www
 php
+
+[debian]
+debiancli
+
+[rh]
+fedoracli
