@@ -1,35 +1,17 @@
 ---
-- name: Installation d'un serveur Redis (famille Debian)
-  hosts: debian
+- name: Installation d'un serveur Redis
+  hosts: linux
   gather_facts: false
   become: true
 
   tasks:
     - name: Installation du paquet redis-server
       ansible.builtin.package:
-        name: redis-server
+        name: "{{ redis_package_name }}"
         state: present
         update_cache: true
 
     - name: Paramètrage du service redis
-      ansible.builtin.systemd:
-        name: redis
-        state: started
-        enabled: true
-
-- name: Installation d'un serveur Redis (famille Redhat)
-  hosts: rh
-  gather_facts: false
-  become: true
-
-  tasks:
-    - name: Installation du paquet redis-server
-      ansible.builtin.package:
-        name: redis
-        state: present
-        update_cache: true
-
-    - name: Paramétrage du service redis
       ansible.builtin.systemd:
         name: redis
         state: started
