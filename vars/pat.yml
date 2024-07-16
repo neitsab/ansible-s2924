@@ -1,0 +1,5 @@
+pat:
+  login: pat
+  home: /home/pat
+  group: pat
+  uid: 2000

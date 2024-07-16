@@ -1,0 +1,22 @@
+---
+- name: Gestion variabilisée de création de compte
+  hosts: linux
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Chargement du fichier de variable pat.yml
+      ansible.builtin.include_vars:
+        file: pat.yml
+
+    - name: Création du groupe de pat
+      ansible.builtin.group:
+        name: "{{ pat.group }}"
+
+    - name: Création du compte pat
+      ansible.builtin.user:
+        name: "{{ pat.login }}"
+        home: "{{ pat.home }}"
+        group: "{{ pat.group }}"
+        shell: "{{ pat.shell | default('/bin/bash') }}"
+
