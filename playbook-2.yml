@@ -9,9 +9,11 @@
         src: data.txt
         dest: /tmp
         mode: "0600"
+      tags: never
 
-    - name: S'assurer de la présence de la ligne "Ouf, fini !"
+    - name: Remplacement de la ligne "Ouf, c'est fini !" par "Bientôt la pause"
       ansible.builtin.lineinfile:
-        line: Ouf, c'est fini !
+        regex: ^Ouf, c'est fini !$
+        line: Bientôt la pause
         dest: /tmp/data.txt
         backup: true
