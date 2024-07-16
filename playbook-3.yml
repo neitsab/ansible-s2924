@@ -1,0 +1,24 @@
+---
+- name: Installation d'un serveur Redis (famille Debian)
+  hosts: debian
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Installation du paquet redis-server
+      ansible.builtin.package:
+        name: redis-server
+        state: present
+        update_cache: true
+
+- name: Installation d'un serveur Redis (famille Redhat)
+  hosts: rh
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Installation du paquet redis-server
+      ansible.builtin.package:
+        name: redis
+        state: present
+        update_cache: true
