@@ -4,10 +4,6 @@
   gather_facts: false
   become: true
 
-  vars:
-    redis_enabled: false
-    redis_state: stopped
-
   tasks:
     - name: Installation du paquet redis-server
       ansible.builtin.package:
