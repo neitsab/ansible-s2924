@@ -1,0 +1,2 @@
+redis_state: stopped
+redis_enabled: false
