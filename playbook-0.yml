@@ -1,0 +1,6 @@
+---
+- name: Acte-I
+  hosts: debiancli
+
+- name: Acte-II
+  hosts: fedoracli
