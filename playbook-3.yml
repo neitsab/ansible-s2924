@@ -13,6 +13,6 @@
 
     - name: Paramètrage du service redis
       ansible.builtin.systemd:
-        name: redis
+        name: "{{ redis_service_name }}"
         state: started
         enabled: true
