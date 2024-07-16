@@ -1,7 +1,6 @@
 ---
 - name: Variables magiques
   hosts: linux
-  gather_facts: false
 
   tasks:
     - name: Tâche avec variable magique
