@@ -8,3 +8,16 @@
         src: ifaces.txt
         dest: /tmp
         mode: "0600"
+
+    - name: Ajout du nom de la cible à la suite de Interfaces
+      ansible.builtin.lineinfile:
+        path: /tmp/ifaces.txt
+        regex: ^Interfaces$
+        line: Interfaces de {{ ansible_hostname }}
+
+    - name: Ajout d'une ligne par interface
+      ansible.builtin.lineinfile:
+        path: /tmp/ifaces.txt
+        line: "{{ item }}"
+      loop: "{{ ansible_interfaces }}"
+      when: item != 'lo'
