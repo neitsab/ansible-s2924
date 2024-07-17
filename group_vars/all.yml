@@ -1,2 +1,2 @@
-redis_state: stopped
-redis_enabled: false
+redis_state: started
+redis_enabled: true

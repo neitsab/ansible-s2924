@@ -10,9 +10,26 @@
         name: "{{ redis_package_name }}"
         state: present
         update_cache: true
+      tags: never
 
     - name: Paramètrage du service redis
       ansible.builtin.systemd:
         name: "{{ redis_service_name }}"
         state: "{{ redis_state }}"
         enabled: "{{ redis_enabled }}"
+
+    - name: Ouverture sur le réseau
+      ansible.builtin.lineinfile:
+        path: /etc/redis/redis.conf
+        regex: ^bind 127.0.0.1
+        line: bind 0.0.0.0
+        backup: true
+      changed_when: true
+      notify: restart_redis
+
+  handlers:
+    - name: Redémarrage du service redis
+      ansible.builtin.systemd:
+        name: "{{ redis_service_name }}"
+        state: restarted
+      listen: restart_redis
