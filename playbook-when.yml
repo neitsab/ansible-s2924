@@ -1,0 +1,47 @@
+---
+- name: Structures conditionnelles
+  hosts: linux
+
+  tasks:
+    - name: Clause when
+      ansible.builtin.debug:
+        msg: "Glop glop sur {{ inventory_hostname }}"
+      when: inventory_hostname == 'debiancli'
+
+    - name: Clause block...when
+      block:
+        - name: Tâche 1
+          ansible.builtin.debug:
+            msg: "Autre Glop glop sur {{ inventory_hostname }}"
+
+        - name: Tâche 2
+          ansible.builtin.debug:
+            msg: "Encore autre Glop glop sur {{ inventory_hostname }}"
+      when: inventory_hostname == 'fedoracli'
+
+    - name: Conjonction de conditions
+      ansible.builtin.debug:
+        msg: "Glop glop sur {{ ansible_architecture }} {{ ansible_distribution }}"
+      when:
+        - ansible_architecture == "x86_64"
+        - ansible_distribution | lower == "debian"
+
+    - name: Disjonction de conditions
+      ansible.builtin.debug:
+        msg: "Glop glop sur {{ ansible_architecture }} {{ ansible_distribution }}"
+      when: ansible_architecture == "x86_64" or ansible_distribution | lower == "debian"
+
+    - name: Clause changed_when
+      ansible.builtin.shell: whoami
+      changed_when: inventory_hostname != "fedoracli"
+
+    - name: Clause failed_when
+      ansible.builtin.shell: grep "{{ quoi | default('root') }}" /etc/passwd
+      changed_when: false
+      register: result
+      failed_when: result.rc > 1
+
+    - name: Affichage résultat avec le filtre ternary (comme l'opérateur ternaire de certains langages)
+      ansible.builtin.debug:
+        msg: "{{ quoi | default('root') }} {{ ( result.rc == 0 ) | ternary('','non ') }}trouvé"
+
