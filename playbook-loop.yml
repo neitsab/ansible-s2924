@@ -1,0 +1,43 @@
+---
+- name: Les boucles Ansible
+  hosts: debiancli
+
+  tasks:
+    - name: Première boucle
+      ansible.builtin.debug:
+        msg: "Couleur: {{ item }}"
+      loop:
+        - vert
+        - marron
+        - violet
+
+    - name: Nom de l'item
+      ansible.builtin.debug:
+        msg: "Couleur: {{ couleur }}"
+      loop:
+        - vert
+        - marron
+        - violet
+      loop_control:
+        loop_var: couleur
+
+    - name: Gestion de l'index
+      ansible.builtin.debug:
+        msg: "Couleur n°{{ idx + 1 }}: {{ couleur }}"
+      loop:
+        - vert
+        - marron
+        - violet
+      loop_control:
+        loop_var: couleur
+        index_var: idx
+
+    - name: Liste des interfaces réseau de la cible autres que 'lo'
+      ansible.builtin.debug:
+        msg: "Interface {{ idx + 1 }}: {{ interface }}"
+      loop: "{{ ansible_interfaces }}"
+      loop_control:
+        loop_var: interface
+        index_var: idx 
+      tags: iface
+      when: interface != 'lo'
