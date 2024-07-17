@@ -1,0 +1,19 @@
+---
+- name: Clause register
+  hosts: linux
+
+  tasks:
+    - name: Copie du fichier data.txt
+      ansible.builtin.copy:
+        src: data.txt
+        dest: /tmp
+      register: result
+
+    - name: Affichage info
+      ansible.builtin.debug:
+        msg: "Checksum: {{ result.checksum }}" 
+
+    - name: Création d'une variable pour stocker le checksum
+      ansible.builtin.set_fact:
+        checksum: "{{ inventory_hostname }}-{{ result.checksum }}" 
+        cacheable: true

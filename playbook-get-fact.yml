@@ -1,0 +1,8 @@
+- name: Récupération du fact checksum
+  hosts: linux
+
+  tasks:
+    - name: Affichage info
+      ansible.builtin.debug:
+        msg: "Checksum: {{ checksum }}" 
+
