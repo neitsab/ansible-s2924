@@ -1,0 +1,10 @@
+---
+- name: Micro-TP n°1
+  hosts: linux
+
+  tasks:
+    - name: Copie du fichier ifaces.txt
+      ansible.builtin.copy:
+        src: ifaces.txt
+        dest: /tmp
+        mode: "0600"
