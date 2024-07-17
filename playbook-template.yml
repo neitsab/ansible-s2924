@@ -1,0 +1,9 @@
+---
+- name: Module template
+  hosts: linux
+
+  tasks:
+    - name: Module template
+      ansible.builtin.template:
+        src: test.txt.j2
+        dest: /tmp/test.txt

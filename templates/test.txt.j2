@@ -1,0 +1,10 @@
+{# Commentaire #}
+Template d'exemple.
+
+{{ inventory_hostname }} ({{ ansible_hostname }})
+
+{% if ansible_distribution | lower == "debian" %}
+Distribution ({{ ansible_distribution }}) supportée
+{% else %}
+Distribution ({{ ansible_distribution }}) non supportée
+{% endif %}
