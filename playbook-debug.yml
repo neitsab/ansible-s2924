@@ -1,0 +1,17 @@
+---
+- name: Module debug
+  hosts: debiancli
+
+  tasks:
+    - name: Module debug
+      ansible.builtin.debug:
+        msg: Coucou
+
+    - name: Module debug
+      ansible.builtin.debug:
+        var: inventory_hostname
+
+    - name: Module debug
+      ansible.builtin.debug:
+        msg: "Hostname: {{ inventory_hostname }}"
+
