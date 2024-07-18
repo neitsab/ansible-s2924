@@ -1,0 +1,75 @@
+---
+- name: Mise en place d'une infra WWW/PHP
+  hosts: linux
+  become: true
+
+  tasks:
+    - name: Installation/Configuration service nginx
+      block:
+        - name: Installation de Nginx sur debiancli
+          ansible.builtin.package:
+            name: nginx
+            state: present
+
+        - name: Configuration service nginx
+          ansible.builtin.systemd:
+            name: nginx
+            state: started
+            enabled: true
+
+        - name: Template default
+          ansible.builtin.template:
+            src: default.j2
+            dest: /etc/nginx/sites-available/default
+          notify: restart_nginx
+      when: inventory_hostname in groups['www']
+
+    - name: Installation/Configuration service PHP
+      block:
+        - name: Installation de PHP-FPM sur fedoracli
+          ansible.builtin.package:
+            name: php-fpm
+            state: present
+
+        - name: Configuration service php-fpm
+          ansible.builtin.systemd:
+            name: php-fpm
+            state: started
+            enabled: true
+          tags: never
+
+        - name: Configuration php - Partie I
+          ansible.builtin.lineinfile:
+            path: /etc/php-fpm.d/www.conf
+            regex: ^listen =
+            line: listen = 9000
+          notify: restart_php
+
+        - name: Configuration PHP - Partie II
+          ansible.builtin.lineinfile:
+            path: /etc/php-fpm.d/www.conf
+            backrefs: true
+            state: present
+            regex: ^(listen\.allowed_clients.*)$
+            line: ;\1
+          notify: restart_php
+      when: inventory_hostname in groups['php']
+
+    - name: Envoi des fichiers de site
+      ansible.builtin.copy:
+        src: site/
+        dest: /var/www/html
+        mode: "0644"
+
+  handlers:
+    - name: Restart nginx
+      ansible.builtin.systemd:
+        name: nginx
+        state: restarted
+      listen: restart_nginx
+
+    - name: Restart php
+      ansible.builtin.systemd:
+        name: php-fpm
+        state: restarted
+      listen: restart_php
