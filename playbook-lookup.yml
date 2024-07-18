@@ -1,0 +1,30 @@
+---
+- name: Quelques lookups Ansible
+  hosts: debiancli
+
+  vars:
+    stage_toulouse: Ansible
+    stage_rennes: Docker
+    stage_lille: Survie
+
+  tasks:
+    - name: Lookup env
+      ansible.builtin.debug:
+        msg: "HOME: {{ lookup('env','HOME') }}"
+
+    # Nécessite le module python dnsutils
+    - name: Lookup dig
+      ansible.builtin.debug:
+        msg: "kernel.org: {{ lookup('dig','kernel.org') }}"
+
+    - name: Lookup file
+      ansible.builtin.debug:
+        msg: "pat.yml: {{ lookup('file','vars/pat.yml')|split('\n') }}"
+
+    - name: Lookup var
+      ansible.builtin.debug:
+        msg: "{{ item | capitalize }}: {{ lookup('vars','stage_'+item) }}"
+      loop:
+        - toulouse
+        - lille
+        - rennes
