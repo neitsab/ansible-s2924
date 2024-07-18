@@ -1,0 +1,40 @@
+---
+- name: Les filtres Ansible
+  hosts: debiancli
+
+  vars:
+    logins:
+      - login: bob
+        groups:
+          - admin
+          - devops
+      - login: curt
+        groups:
+          - escalade
+          - pétanque
+          - devops
+
+  tasks:
+    - name: Filtre default()
+      ansible.builtin.debug:
+        msg: "Variable stage: {{ stage | default('plouf') }}"
+
+    - name: Filtre lower
+      ansible.builtin.debug:
+        msg: "Variable stage: {{ stage | lower }}"
+
+    - name: Boucles imbriquées
+      ansible.builtin.debug:
+        msg: "{{ item[0].login }} {{ item[1] }}"
+      loop: "{{ logins | subelements('groups') }}"
+
+    - name: Filtre sort
+      ansible.builtin.debug:
+        msg: "{{ item }}"
+      loop: "{{ logins[1].groups | community.general.version_sort | reverse }}"
+      tags: loop
+
+    - name: Filter split
+      ansible.builtin.debug:
+        msg: "{{ ('bob léponge'|split(' ')).0 }}"
+      tags: split
