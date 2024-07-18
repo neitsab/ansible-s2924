@@ -1,0 +1,13 @@
+---
+- name: Option limit et fichier de rejeu
+  hosts: linux
+
+  tasks:
+    - name: Tâche en erreur
+      ansible.builtin.debug:
+        msg: "Plouf !"
+      #failed_when: inventory_hostname == 'fedoracli'
+
+    - name: Affichage bidon
+      ansible.builtin.debug:
+        msg: "Cible {{ inventory_hostname }}"
