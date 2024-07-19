@@ -18,6 +18,7 @@
     - name: Ajout d'une ligne par interface
       ansible.builtin.lineinfile:
         path: /tmp/ifaces.txt
-        line: "{{ item }}"
+        regex: ^{{ item }}
+        line: "{{ item }}: {{ lookup('vars','ansible_'+item).ipv4.address }}"
       loop: "{{ ansible_interfaces }}"
       when: item != 'lo'
