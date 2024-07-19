@@ -1,0 +1,7 @@
+---
+- name: Installation de rôles avec requirements
+  hosts: localhost
+
+  tasks:
+    - name: Installation
+      ansible.builtin.shell: "ansible-galaxy role install -r requirements.yml"
