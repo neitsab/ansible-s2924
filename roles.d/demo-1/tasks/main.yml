@@ -1,0 +1,14 @@
+---
+# tasks file for roles.d/demo-1
+
+- name: Tâche I du rôle demo-1
+  ansible.builtin.debug:
+    msg: "Tâche I OK (stage: {{ stage | default('Ansible') }})"
+  notify: task_one_ok
+  changed_when: true
+
+- name: Copie
+  ansible.builtin.copy:
+    src: data.txt
+    dest: /home/stagiaire
+    mode: "0600"
