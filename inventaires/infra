@@ -13,3 +13,7 @@ debiancli
 
 [rh]
 fedoracli
+
+[db]
+debiancli
+fedoracli
