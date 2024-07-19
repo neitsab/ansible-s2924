@@ -1,0 +1,7 @@
+---
+- name: Utilisation du rôle demo-1
+  hosts: debiancli
+
+  roles:
+    - role: demo-1
+      stage: Docker

@@ -1,0 +1,14 @@
+---
+- name: Installation de MariaDB
+  hosts: db
+  become: true
+
+  roles:
+    - role: geerlingguy.mysql
+      mysql_root_password: "{{ mariadb_root_password }}"
+      mysql_databases:
+        - name: stage
+      mysql_users:
+        - name: bob
+          password: azerty
+          priv: stage.*:ALL 
