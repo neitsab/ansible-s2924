@@ -1,0 +1,13 @@
+---
+- name: Micro-TP n°4
+  hosts: linux
+
+  tasks:
+    - name: Création des enregistrements A
+      ansible.builtin.lineinfile:
+        path: /tmp/stage.local
+        line: "{{ inventory_hostname }} IN A  {{ lookup('vars','ansible_'+item).ipv4.address }}"
+        create: true
+      loop: "{{ ansible_interfaces }}"
+      when: item not in ('lo','enp0s3')
+      delegate_to: localhost
