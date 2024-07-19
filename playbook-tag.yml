@@ -1,0 +1,59 @@
+---
+- name: Les tags - Acte I
+  hosts: debiancli
+
+  tasks:
+    - name: Tâche I
+      ansible.builtin.debug:
+        msg: Tâche I
+
+    - name: Tâche II
+      ansible.builtin.debug:
+        msg: Tâche II
+      tags: never
+
+    - name: Tâche III
+      ansible.builtin.debug:
+        msg: Tâche III
+      tags:
+        - tag-1
+        - tag-2
+
+    - name: Tâche IV
+      ansible.builtin.debug:
+        msg: Tâche IV
+      tags: tag-2
+
+    - name: Tâche V
+      ansible.builtin.debug:
+        msg: Tâche V
+      tags: always
+
+- name: Les tags - Acte II
+  hosts: debiancli
+  tags: acte-2
+
+  pre_tasks:
+    - name: Tâche I
+      ansible.builtin.debug:
+        msg: Tâche I
+
+    - name: Tâche II
+      ansible.builtin.debug:
+        msg: Tâche II
+
+    - name: Tâche III
+      ansible.builtin.debug:
+        msg: Tâche III
+
+    - name: Tâche IV
+      ansible.builtin.debug:
+        msg: Tâche IV
+
+    - name: Tâche V
+      ansible.builtin.debug:
+        msg: Tâche V
+
+  roles:
+    - role: demo-1
+      tags: demo
