@@ -19,4 +19,5 @@
         home: "{{ pat.home }}"
         group: "{{ pat.group }}"
         shell: "{{ pat.shell | default('/bin/bash') }}"
-
+        uid: "{{ pat.uid }}"
+        password: "{{ pat.password | password_hash('sha512','AZERTY123456') }}"

@@ -3,3 +3,4 @@ pat:
   home: /home/pat
   group: pat
   uid: 2000
+  password: qwerty
